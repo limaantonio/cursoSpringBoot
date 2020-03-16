@@ -12,28 +12,35 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name = "tbCategory")
-public class Category implements Serializable{
+@Table(name = "tbProduct")
+public class Product implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String name;
+	private String nome;
+	private String description;
+	private Double price;
+	private String imgUrl;
 	
 	@Transient
-	private Set<Product> products = new HashSet<>();
+	private Set<Category> categories = new HashSet<Category>();
 	
-	public Category() {}
+	public Product() {}
 
-	public Category(Long id, String name) {
+	public Product(Long id, String nome, String description, Double price, String imgUrl) {
 		super();
 		this.id = id;
-		this.name = name;
+		this.nome = nome;
+		this.description = description;
+		this.price = price;
+		this.imgUrl = imgUrl;
 	}
 
 	public Long getId() {
@@ -44,12 +51,36 @@ public class Category implements Serializable{
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Double getPrice() {
+		return price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
 	}
 
 	@Override
@@ -58,10 +89,6 @@ public class Category implements Serializable{
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
-	}
-	
-	public Set<Product> getProducts() {
-		return products;
 	}
 
 	@Override
@@ -72,7 +99,7 @@ public class Category implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Category other = (Category) obj;
+		Product other = (Product) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -81,6 +108,13 @@ public class Category implements Serializable{
 		return true;
 	}
 
+	public Set<Category> getCategories() {
+		return categories;
+	}
+	
+	
+	
+	
 	
 	
 	
