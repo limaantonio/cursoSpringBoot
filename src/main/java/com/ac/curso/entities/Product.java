@@ -8,8 +8,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import org.hibernate.annotations.ManyToAny;
 
 @Entity
 @Table(name = "tbProduct")
@@ -29,7 +34,10 @@ public class Product implements Serializable {
 	private Double price;
 	private String imgUrl;
 	
-	@Transient
+	@ManyToMany
+	@JoinTable(name = "tbProduct_category", 
+	joinColumns = @JoinColumn(name = "ProductId"),
+	inverseJoinColumns = @JoinColumn(name = "CategoryId"))
 	private Set<Category> categories = new HashSet<Category>();
 	
 	public Product() {}
