@@ -13,7 +13,6 @@ import javax.persistence.Table;
 
 import com.ac.curso.entities.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatTypes;
 
 
 
@@ -37,6 +36,7 @@ public class Order implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "clientId")
 	private User client;
+	
 	
 	public Order() {}
 
