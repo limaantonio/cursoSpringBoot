@@ -16,8 +16,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.cache.spi.support.AbstractReadWriteAccess.Item;
+
 import com.ac.curso.entities.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 
@@ -42,12 +45,12 @@ public class Order implements Serializable{
 	@JoinColumn(name = "clientId")
 	private User client;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "id.order")
-	private Set<OrderItem> item = new HashSet<>();
+	private Set<OrderItem> items = new HashSet<>();
 	
 	@OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
 	private Payment payment;
-	
 	
 	
 	public Order() {}
@@ -109,6 +112,19 @@ public class Order implements Serializable{
 
 	public void setPayment(Payment payment) {
 		this.payment = payment;
+	}
+	
+	public Double getTotal() {
+		Double soma = 0.0;
+		
+		for(OrderItem x : items) {
+			soma += x.getSubtotal();
+		}
+		return soma;
+	}
+	
+	public Set<OrderItem> getItems(){
+		return items;
 	}
 
 	@Override
